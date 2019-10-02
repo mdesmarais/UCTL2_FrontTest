@@ -2,8 +2,8 @@
     <div id="raceMap">
         <l-map :zoom="zoom" :center="center">
             <l-tile-layer :url="tileUrl" :attribution="attribution" />
-            <l-polyline :lat-lngs="segment" v-for="segment in segments" />
-            <l-polyline :lat-lngs="transition" :color="transitionsColor" v-for="transition in transitions" />
+            <l-polyline :lat-lngs="segment.data" v-for="segment in segments" :key="segment.id" />
+            <l-polyline :lat-lngs="transition.data" :color="transitionsColor" v-for="transition in transitions" :key="transition.id" />
         </l-map>
     </div>
 </template>
