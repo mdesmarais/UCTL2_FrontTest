@@ -34,6 +34,6 @@
 
 <style>
     #raceMap {
-        height: 100%;
+        height: 70%;
     }
 </style>
