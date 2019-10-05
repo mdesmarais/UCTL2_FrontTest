@@ -10,42 +10,48 @@
         </thead>
         <tbody>
             <tr v-for="team in teams" :key="team.id">
-                <td>{{ team.rank | formatRank(team) }}</td>
+                <td>{{ team.rank }} ( <i class="fas" :class="rankIconClass(team)" /> )</td>
                 <td>{{ team.name }}</td>
                 <td><v-progress-linear value="15" height="20px" dark /></td>
-                <td>+35s</td>
+                <td>{{ showTeamTime(team) }}</td>
             </tr>
         </tbody>
     </table>
 </template>
 
 <script>
+    import numeral from 'numeral'
+
     export default {
-        data () {
-            return {
-                teams: [
-                    {
-                        id: 1,
-                        rank: 1,
-                        lastRank: 1,
-                        name: "Istic Rennes 1"
-                    },
-                    {
-                        id: 2,
-                        rank: 2,
-                        lastRank: 3,
-                        name: "Les débutants"
-                    }
-                ]
+        computed: {
+            elapsedTimeFromRaceStart () {
+                return this.$store.state.elapsedTimeFromRaceStart
+            },
+            teams () {
+                let teamsArray = this.$store.state.teams
+                teamsArray.sort((t1, t2) => t1.rank >= t2.rank)
+                return teamsArray
             }
         },
-        filters: {
-            formatRank: function(rank, team) {
-                if (rank == team.lastRank) {
-                    return rank.toString() + ' ( = )'
+        methods: {
+            rankIconClass (team) {
+                if (team.rank < team.lastRank) {
+                    return 'fa-caret-up'
                 }
-
-                return rank.toString() + ' (   )'
+                else if (team.rank > team.lastRank) {
+                    return 'fa-caret-down'
+                }
+                else {
+                    return 'fa-equals'
+                }
+            },
+            showTeamTime (team) {
+                if (team.rank < 5) {
+                    return numeral(this.elapsedTimeFromRaceStart).format('00:00:00')
+                }
+                else {
+                    return '0'
+                }
             }
         }
     }

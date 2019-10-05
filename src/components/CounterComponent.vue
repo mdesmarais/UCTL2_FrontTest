@@ -21,31 +21,16 @@
 <script>
 
     export default {
-        data () {
-            return {
-                now: 0
-            }
-        },
         computed: {
+            elapsedTimeFromRaceStart () {
+                return this.$store.state.elapsedTimeFromRaceStart
+            },
             seconds () {
-                return (this.now - this.startingTime) % 60
+                return this.elapsedTimeFromRaceStart % 60
             },
             minutes () {
-                return Math.trunc((this.now - this.startingTime) / 60) % 60
+                return Math.trunc(this.elapsedTimeFromRaceStart / 60) % 60
             }
-        },
-        props: {
-            startingTime: {
-                type: Number,
-                default () {
-                    return Math.trunc(new Date().getTime() / 1000)
-                }
-            }
-        },
-        mounted() {
-            setInterval(() => {
-                this.now = Math.trunc(new Date().getTime() / 1000)
-            }, 1000)
         }
     }
 </script>

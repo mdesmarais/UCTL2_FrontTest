@@ -15,9 +15,12 @@
     "numeral": "^2.0.6",
     "vue": "^2.6.10",
     "vue2-leaflet": "^2.2.1",
-    "vuetify": "^2.0.0"
+    "vue2-leaflet-movingmarker": "0.0.1",
+    "vuetify": "^2.0.0",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
