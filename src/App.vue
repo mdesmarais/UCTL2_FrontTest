@@ -1,25 +1,29 @@
 <template>
-    <div id="app">
-        <div class="grid-x">
-            <div class="cell large-3">
-                <h1>Univercity Trail 2020</h1>
-                <br>
-                <br>
-                <counter-component />
-                <br>
-                <br>
-                <div class="followRace">
-                    <h3>Scanner ce QR code<br>pour suivre la course en direct</h3>
-                    <img src="qrcode.png" alt="qrcode">
-                </div>
-            </div>
-            <div class="cell large-9">
-                <map-component />
-                <br>
-                <live-results-component />
-            </div>
-        </div>
-    </div>
+    <v-app>
+        <v-content>
+            <v-container fluid>
+                <v-row justify="center" no-gutters>
+                    <v-col :sm="3" style="text-align:center">
+                        <h1>Univercity Trail 2020</h1>
+                        <br>
+                        <br>
+                        <counter-component />
+                        <br>
+                        <br>
+                        <div class="followRace">
+                            <h3>Scanner ce QR code<br>pour suivre la course en direct</h3>
+                            <img src="qrcode.png" alt="qrcode">
+                        </div>
+                    </v-col>
+                    <v-col style="max-height: 70%">
+                        <map-component />
+                        <br>
+                        <live-results-component />
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
@@ -38,11 +42,6 @@
 </script>
 
 <style>
-    html, body, #app, .grid-x, .cell {
-        height: 100%;
-        width: 100%;
-    }
-
     h1 {
         border-bottom: 2px solid black;
         text-align: center;

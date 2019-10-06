@@ -1,24 +1,25 @@
 <template>
     <div class="counter">
         <h2>Temps en course</h2>
-        <div class="grid-x">
-            <div class="cell large-auto">
+        <v-row>
+            <v-col>
                 <p class="digit">00</p>
                 <p class="text">Heures</p>
-            </div>
-            <div class="cell large-auto">
+            </v-col>
+            <v-col>
                 <p class="digit">{{ minutes }}</p>
                 <p class="text">Minutes</p>
-            </div>
-            <div class="cell large-auto">
+            </v-col>
+            <v-col>
                 <p class="digit">{{ seconds }}</p>
                 <p class="text">Secondes</p>
-            </div>
-        </div>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
 <script>
+    import numeral from 'numeral'
 
     export default {
         computed: {
@@ -26,10 +27,10 @@
                 return this.$store.state.elapsedTimeFromRaceStart
             },
             seconds () {
-                return this.elapsedTimeFromRaceStart % 60
+                return numeral(this.elapsedTimeFromRaceStart % 60).format('00')
             },
             minutes () {
-                return Math.trunc(this.elapsedTimeFromRaceStart / 60) % 60
+                return numeral(Math.trunc(this.elapsedTimeFromRaceStart / 60) % 60).format('00')
             }
         }
     }
@@ -42,6 +43,11 @@ h2 {
 
 .cell {
     text-align: center;
+}
+
+.counter {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .text {

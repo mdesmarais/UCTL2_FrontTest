@@ -1,22 +1,22 @@
 <template>
-    <table>
+    <v-simple-table>
         <thead>
             <tr>
-                <td class="rankColumn">Position</td>
-                <td>Equipe</td>
-                <td>Progression</td>
-                <td>Temps</td>
+                <th class="title">Position</th>
+                <th class="title">Equipe</th>
+                <th class="title">Progression</th>
+                <th class="title">Temps</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="team in teams" :key="team.id">
-                <td>{{ team.rank }} ( <i class="fas" :class="rankIconClass(team)" /> )</td>
+                <td>{{ team.rank }} <v-icon>{{ rankStatusIcon(team) }}</v-icon></td>
                 <td>{{ team.name }}</td>
-                <td><v-progress-linear value="15" height="20px" dark /></td>
+                <td><v-progress-linear value="15" height="20px"/></td>
                 <td>{{ showTeamTime(team) }}</td>
             </tr>
         </tbody>
-    </table>
+    </v-simple-table>
 </template>
 
 <script>
@@ -34,20 +34,20 @@
             }
         },
         methods: {
-            rankIconClass (team) {
+            rankStatusIcon (team) {
                 if (team.rank < team.lastRank) {
-                    return 'fa-caret-up'
+                    return 'mdi-menu-up'
                 }
                 else if (team.rank > team.lastRank) {
-                    return 'fa-caret-down'
+                    return 'mdi-menu-down'
                 }
                 else {
-                    return 'fa-equals'
+                    return 'mdi-equal'
                 }
             },
             showTeamTime (team) {
-                if (team.rank < 5) {
-                    return numeral(this.elapsedTimeFromRaceStart).format('00:00:00')
+                if (team.rank == 1) {
+                    return numeral(this.elapsedTimeFromRaceStart).format('00:00')
                 }
                 else {
                     return '0'
@@ -58,7 +58,7 @@
 </script>
 
 <style>
-    .rankColumn {
-        width: 5%;
+    th {
+        font-weight: bold;
     }
 </style>

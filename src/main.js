@@ -6,11 +6,6 @@ import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import vuetify from './plugins/vuetify'
 
-import 'foundation-sites/dist/css/foundation.min.css'
-import 'foundation-sites/dist/js/foundation.min.js'
-
-import '@fortawesome/fontawesome-free/js/all.min.js'
-
 Vue.config.productionTip = false
 Vue.use(Vuex)
 
@@ -64,17 +59,8 @@ setInterval(() => {
 }, 1000)
 
 setInterval(() => {
-    let teams = []
-    let i = Math.floor(Math.random() * 10)
-    let team = {
-        id: i,
-        name: "Team " + i,
-        rank: Math.floor(Math.random() * 7),
-        lastRank: Math.floor(Math.random() * 7)
-    }
-    teams.push(team)
-    store.commit('updateTeams', teams)
-}, 5000)
+    
+}, 10000)
 
 new Vue({
     store,
