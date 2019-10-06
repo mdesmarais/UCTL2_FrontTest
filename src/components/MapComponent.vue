@@ -4,14 +4,13 @@
         <l-polyline :lat-lngs="segment.data" v-for="segment in segments" :key="segment.id" />
         <l-polyline :lat-lngs="transition.data" :color="transitionsColor" v-for="transition in transitions" :key="transition.id" />
 
-        <!--<l-moving-marker v-for="team in movableTeams" :key="team.id" :lat-lng="team.currentPos" :duration="1000" />-->
-        <l-marker v-for="poi in pois" :key="poi.id" :lat-lng="poi.pos" :icon="poi.icon" />
+        <l-moving-marker v-for="team in teams" :key="team.name" :lat-lng="team.pos" :duration="1000" />
     </l-map>
 </template>
 <script type="text/babel">
     import L from 'leaflet'
-    import { LMap, LMarker, LPolyline, LTileLayer } from 'vue2-leaflet'
-    //import LMovingMarker from 'vue2-leaflet-movingmarker'
+    import { LMap, LPolyline, LTileLayer } from 'vue2-leaflet'
+    import LMovingMarker from 'vue2-leaflet-movingmarker'
     import { S1, S2, S3, S4, S5, TS12, TS23, TS34, TS45 } from '../segments.js'
 
     const feedingZoneIcon = L.icon({
@@ -21,8 +20,7 @@
     export default {
         components: {
             LMap,
-            LMarker,
-            //LMovingMarker,
+            LMovingMarker,
             LTileLayer,
             LPolyline
         },

@@ -5,6 +5,7 @@ import App from './App.vue'
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import vuetify from './plugins/vuetify'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
@@ -32,24 +33,7 @@ const store = new Vuex.Store({
             state.elapsedTimeFromRaceStart = now - state.raceStartTime
         },
         updateTeams(state, updatedTeams) {
-            updatedTeams.forEach(team => {
-                let id = 'team' + team.id
-                let pouet = state.teams.findIndex(teamFind => {
-                    if (teamFind.id == id) {
-                        return teamFind
-                    }
-                })
-
-                if (pouet >= 0) {
-                    //console.log('Team ' + team.name + ' is already saved')
-                    state.teams[pouet] = team
-                }
-                else {
-                    team.id = id
-                    state.teams.push(team)
-                    //console.log('Team ' + team.name + ' has been added')
-                }
-            })
+            state.teams = updatedTeams
         }
     }
 })
@@ -59,7 +43,14 @@ setInterval(() => {
 }, 1000)
 
 setInterval(() => {
-    
+    axios.get('URL updateTeams')
+    .then((response) => {
+        // response ou response.teams
+        let teams = response
+        store.commit('updateTeams', teams)
+    }, (error) => {
+        error
+    })
 }, 10000)
 
 new Vue({

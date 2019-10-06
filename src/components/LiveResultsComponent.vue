@@ -9,10 +9,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="team in teams" :key="team.id">
+            <tr v-for="team in teams" :key="team.name">
                 <td>{{ team.rank }} <v-icon>{{ rankStatusIcon(team) }}</v-icon></td>
                 <td>{{ team.name }}</td>
-                <td><v-progress-linear value="15" height="20px"/></td>
+                <td><v-progress-linear :value="team.progress" height="20px"/></td>
                 <td>{{ showTeamTime(team) }}</td>
             </tr>
         </tbody>
