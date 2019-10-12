@@ -18,11 +18,22 @@ Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
+const API_URL = 'url'
+
 setInterval(() => {
-    axios.get('URL updateTeams')
+    // Récupérations du statut de la course
+    axios.get(API_URL + '/UPDATE_RACE_STATUS')
     .then((response) => {
-        // response ou response.teams
-        let teams = response
+        const race = response.data
+        store.commit('updateRaceStatus', race)
+    }, (error) => {
+        error
+    })
+
+    // Récupérations des équipes
+    axios.get(API_URL + '/UPDATE_TEAMS')
+    .then((response) => {
+        let teams = response.data
         store.commit('updateTeams', teams)
     }, (error) => {
         error
