@@ -32,6 +32,11 @@
             minutes () {
                 return numeral(Math.trunc(this.elapsedTimeFromRaceStart / 60) % 60).format('00')
             }
+        },
+        mounted () {
+            setInterval(() => {
+                this.$store.dispatch('updateElapsedTime')
+            }, 1000)
         }
     }
 </script>
