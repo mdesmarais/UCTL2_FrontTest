@@ -3,7 +3,7 @@
         <h2>Temps en course</h2>
         <v-row>
             <v-col>
-                <p class="digit">00</p>
+                <p class="digit">{{ hours }}</p>
                 <p class="text">Heures</p>
             </v-col>
             <v-col>
@@ -31,6 +31,9 @@
             },
             minutes () {
                 return numeral(Math.trunc(this.elapsedTimeFromRaceStart / 60) % 60).format('00')
+            },
+            hours () {
+                return numeral(Math.trunc(this.elapsedTimeFromRaceStart / 60 / 60) % 24).format('00')
             }
         },
         mounted () {
