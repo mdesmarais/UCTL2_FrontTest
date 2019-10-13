@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        raceStartTime: Math.trunc(new Date().getTime() / 1000),
+        raceStartTime: 0,
         // 0 : not started, 1 : live, 2 : finished
         raceStatus: 0,
         elapsedTimeFromRaceStart: 0,
