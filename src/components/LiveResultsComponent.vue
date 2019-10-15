@@ -29,7 +29,18 @@
             },
             teams () {
                 let teamsArray = this.$store.state.teams
-                teamsArray.sort((t1, t2) => t1.rank >= t2.rank)
+                teamsArray.sort((t1, t2) => {
+                    if (t1.rank < t2.rank) {
+                        return -1
+                    }
+                    else if (t1.rank > t2.rank) {
+                        return 1
+                    }
+                    
+                    // Si deux équipes ont le même rang, alors on les tries
+                    // par ordre lexicographique
+                    return (t1.name <= t2.name) ? -1 : 1
+                })
                 return teamsArray
             }
         },
