@@ -1,8 +1,7 @@
 <template>
-    <l-map id="raceMap" :zoom="zoom" :center="center">
+    <l-map id="raceMap" ref="leafmap" :zoom="getZoom()" :center="getCenter()">
         <l-tile-layer :url="tileUrl" :attribution="attribution" />
-        <l-polyline :lat-lngs="segment.data" v-for="segment in segments" :key="segment.id" />
-        <l-polyline :lat-lngs="transition.data" :color="transitionsColor" v-for="transition in transitions" :key="transition.id" />
+        <l-polyline :lat-lngs="racePoints" key="racePoints" />
 
         <l-moving-marker v-for="team in teams" :key="team.name" :lat-lng="team.pos" :duration="1000" />
     </l-map>
@@ -11,11 +10,6 @@
     import L from 'leaflet'
     import { LMap, LPolyline, LTileLayer } from 'vue2-leaflet'
     import LMovingMarker from 'vue2-leaflet-movingmarker'
-    import { S1, S2, S3, S4, S5, TS12, TS23, TS34, TS45 } from '../segments.js'
-
-    const feedingZoneIcon = L.icon({
-        iconUrl: 'marker-bottle.png'
-    })
 
     export default {
         components: {
@@ -25,6 +19,9 @@
             LPolyline
         },
         computed: {
+            racePoints () {
+                return this.$store.state.racePoints
+            },
             teams () {
                 return this.$store.state.teams
             }
@@ -32,21 +29,32 @@
         data () {
             return {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                center: [48.1266, -1.6694],
                 tileUrl: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png ',
-                zoom: 13,
 
-                segments: [ S1, S2, S3, S4, S5 ],
-                transitions: [ TS12, TS23, TS34, TS45 ],
-                transitionsColor: "black",
+                defaultCenter: [48.13855, -1.65967],
+                defaultZoom: 13
+            }
+        },
+        methods: {
+            getCenter () {
+                let points = this.racePoints
 
-                pois: [
-                    {
-                        id: 'water1',
-                        icon: feedingZoneIcon,
-                        pos: [48.13855, -1.65967]
-                    }
-                ]
+                if (points.length == 0) {
+                    return this.defaultCenter
+                }
+
+                return L.latLngBounds(points).getCenter()
+            },
+            getZoom () {
+                let points = this.racePoints
+
+                // Vérifie que la map est bien chargée
+                if (points.length > 0 && "leafmap" in this.$refs) {
+                    // Mise à jour du zoom
+                    return this.$refs.leafmap.mapObject.getBoundsZoom(points)
+                }
+
+                return this.defaultZoom
             }
         }
     }

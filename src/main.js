@@ -18,11 +18,25 @@ Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
-const API_URL = 'url'
+const API_URL = 'http://127.0.0.1:5000'
+const API_ACTIONS = {
+    UPDATE_RACE_POINTS: '/getRacePoints',
+    UPDATE_STATUS: '/updateRaceStatus',
+    UPDATE_TEAMS: '/updateTeams'
+}
+
+// Récupération des points de course
+// @TODO faire la requête tant qu'il y a une erreur
+axios.get(API_URL + API_ACTIONS.UPDATE_RACE_POINTS)
+.then((response) => {
+    store.commit('updateRacePoints', response.data.points)
+}, (error) => {
+    error
+})
 
 setInterval(() => {
     // Récupérations du statut de la course
-    axios.get(API_URL + '/UPDATE_RACE_STATUS')
+    axios.get(API_URL + API_ACTIONS.UPDATE_STATUS)
     .then((response) => {
         const race = response.data
         store.commit('updateRaceStatus', race)
@@ -31,7 +45,7 @@ setInterval(() => {
     })
 
     // Récupérations des équipes
-    axios.get(API_URL + '/UPDATE_TEAMS')
+    axios.get(API_URL + API_ACTIONS.UPDATE_TEAMS)
     .then((response) => {
         let teams = response.data
         store.commit('updateTeams', teams)

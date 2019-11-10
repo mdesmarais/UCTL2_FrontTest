@@ -6,6 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         raceStartTime: 0,
+        racePoints: [],
         // 0 : not started, 1 : live, 2 : finished
         raceStatus: 0,
         elapsedTimeFromRaceStart: 0,
@@ -15,6 +16,9 @@ const store = new Vuex.Store({
         updateElapsedTime(state) {
             let now = Math.trunc(new Date().getTime() / 1000)
             state.elapsedTimeFromRaceStart = now - state.raceStartTime
+        },
+        updateRacePoints(state, points) {
+            state.racePoints = points
         },
         updateRaceStatus(state, race) {
             state.raceStartTime = race.startTime
