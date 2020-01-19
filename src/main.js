@@ -21,20 +21,32 @@ Icon.Default.mergeOptions({
 const API_URL = 'http://127.0.0.1:5000'
 const API_ACTIONS = {
     UPDATE_RACE_POINTS: '/getRacePoints',
-    UPDATE_STATUS: '/updateRaceStatus',
-    UPDATE_TEAMS: '/updateTeams'
+    UPDATE_STATUS: '/race-status',
+    UPDATE_TEAMS: '/teams'
 }
 
 // Récupération des points de course
 // @TODO faire la requête tant qu'il y a une erreur
-axios.get(API_URL + API_ACTIONS.UPDATE_RACE_POINTS)
+/*axios.get(API_URL + API_ACTIONS.UPDATE_RACE_POINTS)
 .then((response) => {
     store.commit('updateRacePoints', response.data.points)
 }, (error) => {
     error
-})
+})*/
 
-setInterval(() => {
+var ws = new WebSocket('ws://127.0.0.1:5678')
+
+ws.onmessage = function(e) {
+    var event = JSON.parse(e.data)
+    console.log(event)
+    
+    if (event.id == 1) {
+        store.commit('updateRaceStatus', event.data)
+    }
+    console.log(store.state.raceStatus)
+}
+
+/*setInterval(() => {
     // Récupérations du statut de la course
     axios.get(API_URL + API_ACTIONS.UPDATE_STATUS)
     .then((response) => {
@@ -52,7 +64,7 @@ setInterval(() => {
     }, (error) => {
         error
     })
-}, 10000)
+}, 10000)*/
 
 new Vue({
     store,
