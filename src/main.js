@@ -41,9 +41,8 @@ ws.onmessage = function(e) {
     console.log(event)
     
     if (event.id == 1) {
-        store.commit('updateRaceStatus', event.data)
+        store.commit('updateRaceStatus', event.payload)
     }
-    console.log(store.state.raceStatus)
 }
 
 /*setInterval(() => {
